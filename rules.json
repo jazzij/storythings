@@ -1,0 +1,92 @@
+[{
+	"name":"test",
+	"context":{
+		"configuration": "right",
+		"condition": "test",
+		"action": "merge"
+	},
+	"priority":1
+},
+{
+	"name":"combine",
+	"context": {
+		"configuration": "right",
+		"condition": "matchTopic",
+		"action": "merge"
+	},
+	"priority":2
+},
+{
+	"name":"morph",
+	"context":{
+		"configuration":"adjacent_all",
+		"condition": "matchTopic",
+		"action":"activeBRec"
+	},
+	"priority":3
+},
+{
+	"name":"silence",
+	"context":{
+		"configuration":"single",
+		"condition":"checkLock",
+		"action":"lockUp"
+	},
+	"priority":5
+},
+{
+	"name":"block",
+	"context":{
+		"configuration":"adjacent_any",
+		"condition":"matchTopic",
+		"action":"blockAudio"
+	},
+	"priority":4
+},
+{
+	"name":"release",
+	"context":{
+		"configuration":"around",
+		"condition":"matchTopic",
+		"action":"releaseLock"
+	},
+	"priority":4
+},
+{
+	"name":"set_silence",
+	"context":{
+		"configuration":"single",
+		"condition":"noBRec",
+		"action":"lockup",
+		"arguments":"40"
+	},
+	"priority":-1
+},
+{
+	"name":"unset_silence",
+	"context":{
+		"configuration":"on_call",
+		"condition":"noBRec",
+		"action":"lockup"
+	},
+	"priority":-1
+},
+{
+	"name":"topicLock",
+	"context":{
+		"configuration":"adjacent",
+		"condition":"matchTopic",
+		"action":"unlock_by_topic"
+	},
+	"priority":-1
+},
+{
+	"name":"simplePlay",
+	"context":{
+		"configuration":"single",
+		"condition":"None",
+		"action":"play"
+	},
+	"priority":1
+}]
+

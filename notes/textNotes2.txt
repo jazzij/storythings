@@ -1,0 +1,63 @@
+#RULES
+
+Play audio clip ( clipID, startFrom=0)
+Access audio but don't plsy;
+
+
+
+
+
+#STYLES
+
+shapes = [ {shape_id: num_id
+			audio_file: file_name, 
+			center: (x,y),
+			contour: countour}, 
+			{audio_file: file_name,
+			center: (x,y)},
+			...
+			]
+			
+region1 = [(topx,y), (bottomleftx,y)]
+region2 = [...]
+
+saved_shapes = list_of_contours
+
+
+
+_find_countours_in_region( start, finish):
+	for each s in shapes:
+		if center in (start, finish): #a < x0 < a+c and b < y0 < b + d
+		or cv::rect.contains()
+			add_to_returnList
+	return returnList
+
+_find_contour_like_this( countour ):
+	for each c in shapes:
+		cv.matchCountour( c.countour, counter)
+		
+_create_shape ( contour)
+	calc_center
+	counter = countour
+	
+_saveShapesforLater
+
+
+##User walkthrough
+1) Mass collection assignment
+a) bring your shapes
+b) >start Scatter in Scan mode: a red light means scanning, yellow means load/unload, green means finish
+c) >Insert USB with audio, script with grab *all MP3's 
+d) Grab all MP3 files in target folder
+e) In SCAN_MODE, associate n MP3s with shapes
+	1) refresh list of unmatched mp3s (l.pop(idx))
+	2) get number of shapes in frame
+	3) match n shapes with first n mp3s
+f) In WATCH_MODE: illuminate watched region
+	 
+	
+	
+Helpful resources: 
+Getting the full image in a rect: 
+-http://www.pyimagesearch.com/2016/04/11/finding-extreme-points-in-contours-with-opencv/
+-https://stackoverflow.com/questions/15589517/how-to-crop-an-image-in-opencv-using-python

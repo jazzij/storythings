@@ -1,0 +1,101 @@
+#ON_SCENE_CHANGE return SHAPES[]. Given a landscape of shapes
+
+## BACKGROUND: analyze the scene and calculate the proximity of all shapes to each other (mesh network)
+1. For each detected shape, get center and the find object with closest x, y, and x,y
+
+## RULES
+class StoryThings( object):
+		self.clipA = pygame.mixer.Sound(audiofile)
+		self.clipB = brec 
+		self.shape = shape
+		self.rules = [ PLAY, COMBINE] #these are rules that this chip observes. by default all chips PLAY and COMBINE
+		self.topics = ["keyword1", "keyword2",]
+		self.subjects = ["keyword", "keyword",]
+		self.timelock = seconds
+		self.topicLock = None
+		self.anti_topics = []
+		self.morph_topics = [] #secondary topics of the brec
+		
+		self.LOCKED
+		self.MORPHED
+
+RULES to set a STATE
+RULES that respond to a STATE + CONFIGURATION
+-RESPONSES: 
+ - generate some audio file
+ - set a Thing.STATE
+
+1. list of rules that set a state
+2. list of rules that generate a file
+3. order of rules (execution sequence)
+
+#SILENCE (time) has the highest priority. A chip governed by this rule can heed no other interactions.
+#MORPH is checked next. If a b-rec is activated, then the recording that all other rules act upon is the B-rec, rather than the A-rec.
+#SILENCE( topical). Unless unlocked by topic, the recording is inactive (morph vs. silence: silence governed chips have no b-rec)  
+#BLOCK is next. Any topic or subject in the active recording is blocked according to the settings of this.
+#COMBINE the active recordings of current and adjacent chips are combined into the current chip, and the chips rules apply.
+#PLAY - playback the recording
+
+
+Set a State
+SILENCE - set LOCK based on internal (timelock) or external (surround topic) criteria
+COMBINE - change active clip to a new (external) recording.
+MORPH - change active clip to a new (internal) recording 
+BLOCK - change active clip to edited self recording
+
+Configuration Responses 
+MORPH - when 1 chip is present with a shared topic relevant to morph: give new internal audio file
+COMBINE - when 1 chip is present with shared topic: generate new external audio file
+BLOCK - when 1 chip is present with an anti-topic: generate a new internal audio file
+PLAY - chip in PLAY_REGION
+
+
+PRESENT: To the right 
+SURROUND: All immediate positions (above, below, left, right)
+SHARED_TOPIC: matchedTopics Non-empty
+SHARED_TOPIC + MORPH: matchedTopics(type="morph")
+ANTI_TOPIC : matchedTopics(type="anti")
+
+EXTERNAL_AUDIO_FILE : otherChip is Audio_Chip, use otherChip's audioFile
+INTERNAL_AUDIO_FILE : use self's audio
+
+ACTIVE_CLIP : PRIMARY | SECONDARY
+
+
+
+##### V2
+AUDIO CHIP (basic)
+Have TOPIC chips ( text recognition? those magnet things?)
+CONTEXT chips (people, location, time)
+
+############
+
+REDO RULES
+{
+"rule" : "PLAY"
+"action" : "play"
+"target" : "active_clip"
+"location" : "center"
+}
+
+{
+"rule" : "TIMELOCK"
+"action" : "check_timelock"
+"target" : "active_clip"
+"location" : "center"
+}
+
+"rule" : "COMBINE"
+if RIGHT_CHIP has SHARED_TOPIC: centerChip.combineAudio( RIGHT_CHIP_AUDIO )
+
+"rule": "TOPIC SILENCE"
+if ALL_CHIP has SHARED_TOPIC: centerChip.LOCKED = False
+
+"rule": "TIME SILENCE"
+if CENTER_CHIP has TIMELOCK : centerChip.LOCKED = True
+
+"rule": " MORPH"
+if ALL_CHIP has SHARED_TOPIC: centerChip.activateBRec( SHARED_TOPICS)
+
+
+ 

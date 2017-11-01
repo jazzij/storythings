@@ -1,0 +1,28 @@
+THINGS I COMMENTED OUT
+
+_orderThing
+_shapeID
+
+PROBLEM:
+RESOLVED: adjacent calculations are coming out wrong for saved shapes. I think this is because 
+the contours are being calculated based on their position in their tiny contour image, rather than their position in the large image
+eed to go back and verify this. 
+
+First, check to see if the calculations are correct on a virgin run (no saved contours)
+Also check to see what the distance measurements are in the adjacency detection method
+- changed the == to be <=
+
+RESOLVED: Why are empty contours being saved???? 
+- the resize command that I commented out was necessary, but I don't know why... probably something downstream but I don't want to deal with it
+
+
+RESOLVED!: THE CENTERS are being recognized as the same. See issue one-- are they being calculated based on position in 
+large captured image or from the contour?
+- the for loop that added up updated the storythings list was messed up
+
+ISSUE: default rec topics are coming up empty when storythings are created :(((
+- some upstream bugs. all fixed now
+
+7:30pm fixed
+to check: Combine is trying to act on a shape and not a thign
+run through every rule

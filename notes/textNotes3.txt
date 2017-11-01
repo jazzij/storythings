@@ -1,0 +1,69 @@
+{
+	"name":"combine", 
+	"chips":[ 
+		{
+			"alias":"core"
+		},
+		{
+			"alias:"chip-right"
+		}
+	],
+	"context": {
+	"configuration": "adjacent"
+	"condition":"matchTopic" 
+	"action":"merge"
+	}
+}
+
+
+
+## PARSER
+# IN SHAPE INTERPRETER, get block, and all configurations that it is a part of (configuration should maybe be another class)
+if context.CONFIGURATION == "adjacent"
+	rules = [rules for rule in rulesList if rule["configuration"] is "adjacent"]
+	
+	for rule in rules:
+		rule.execute(context.THING, context.CONFIGURATION) 
+	
+~~ does the parser play?	
+	
+	
+def matchTopic( thing1, thing2, type=None):
+	pass
+
+def merge( thing1, thing2):
+	pass
+
+
+configuration = Configuration( thing1, shapes)
+
+
+
+class Rules(object):	
+	self.rules
+	def execute ( thing, configuration)
+
+
+	def combine_rule(context):
+		if rule["combine"].configuration != context.configuration :
+		return
+
+
+# if execution is not a class. maybe it doesn't need to be?...
+def executeRule( thing, ruleString, context):
+	if rule.condition :
+		 
+
+
+class Configuration ( object):
+	def __init__(self, core, others):
+		self.adjacent = {"left": None, "right": None, "above":None, "below":None}
+		self.core = thing1	
+	
+	def calcAdjacent ( self, otherContours):
+		pass ~ exclude self
+		
+
+
+
+		
