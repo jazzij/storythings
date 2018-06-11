@@ -52,6 +52,16 @@ class Shape(object):
 		filename  = "{0}roi{1}.jpg".format(CONTOUR_DIR, self.id)
 		cv2.imwrite(filename, roi)
 
+	def contour_size(self):
+		#initialize shape name & approximate contour: a_compute perimeter, b_feed into algorithm. 
+		peri = cv2.arcLength(self.contour, True)
+		#approx = cv2.approxPolyDP(self.contour, 0.04 * peri, True) #common values between .01-.05		
+		area = cv2.contourArea(self.contour)
+		#print("detected %s vertices", len(approx))
+		print("P: " + str(peri) + " A: "+str(area))
+		
+		return area
+
 	#returns a float euclidean distance between this shape and another
 	def euclidean_distance(self, otherShape):
 		x1 = self.center[0]
