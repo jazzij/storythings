@@ -1,6 +1,7 @@
 import os, math
 import cv2
 import imutils
+import numpy as np
 from shapeDetection import Shape
 
 #SETUP
@@ -19,8 +20,8 @@ def getContoursFromImage(image, background_color='w' ):
 	IMG_RATIO = ratio
 	
 	gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
-	blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-	thresh = cv2.threshold(gray, (60 if binaryStyle==0 else 90), 255, binaryStyle)[1] #original thresh=60, inverted thresh = 90
+	#blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+	ret, thresh = cv2.threshold(gray, (60 if binaryStyle==0 else 90), 255, binaryStyle) #original thresh=60, inverted thresh = 90
 
 	#	cv2.imwrite( "/home/pi/Documents/pyimagesearch/gray_"+args["image"], gray )
 	#cv2.imwrite( CONTOUR_DIR+"/thresh.png", thresh )
@@ -28,7 +29,10 @@ def getContoursFromImage(image, background_color='w' ):
 	# find contours in the thresholded image
 	contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = contours[0] if imutils.is_cv2() else contours[1]
-			
+	
+	#test
+	#cv2.drawContours(resized, cnts, 1, (0,255,0), 2)
+	#cv2.imwrite(CONTOUR_DIR+"_testcts.jpg", resized);	
 	return cnts
 
 
@@ -59,11 +63,12 @@ def saveDetectedShape(shapeContour, image, id=None):
 
 #get a image from directory
 #DIRECTORY = os.getcwd() + "/"
-testfile = IMAGE_DIR + "p4.jpg"
+testfile = IMAGE_DIR + "p5.jpg"
 
 scene = cv2.imread(testfile)
-#contours = getContoursFromImage(scene)
-contours = getContoursFromImage(scene, background_color = 'b')
+contours = getContoursFromImage(scene)
+#contours = getContoursFromImage(scene, background_color = 'b')
+
 
 id=0
 for c in contours:
