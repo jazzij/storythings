@@ -8,14 +8,20 @@ import cv2
 import cv2.aruco as aruco
 
 IMAGE_DIR = "./arcimg/"
-SMALL_DICT = cv.aruco.DICT_4X4_50
+DICT_MAX = 50  #: cv.aruco.DICT_4X4_50
 
 '''
 GENERATE DEFINE DICTIONARY
 THIS IS RUN ONCE during system initiation
+4x4 marker size = 16pix + border size = 1 (default) ==> 25 pix minimum ?
 '''
 def printMarkers():
-
+	aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
+	for i in range(0, DICT_MAX):
+		img = aruco.drawMarker(aruco_dict, i, 200)
+		filename = "marker_small-"+str(i)+".jpg"
+		cv2.imwrite(filename, img)
+		
 
 '''
 CAPTURE AN IMAGE 
@@ -23,23 +29,24 @@ CAPTURE AN IMAGE
 def captureScene():
     #1. Capture image
     #scene = cam.captureImage()
-	testfile = IMAGE_DIR + "p5.jpg"
+	testfile = "arucotest.jpg"
 
 	scene = cv2.imread(testfile)
-	resized = imutils.resize(scene, width=RESIZE_WIDTH)
-	gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
-
-	#generate a dictionary of markers (should be same as printed)
-	aruco_dict = aruco.Dictionary_get(aruco.DICT_6X6_250)
-	parameters = aruco.DetectorParameters_create()
+	#resized = imutils.resize(scene, width=RESIZE_WIDTH)
+	gray = cv2.cvtColor(scene, cv2.COLOR_BGR2GRAY)
 	
 	'''
 	DETECT MARKER IN IMAGE
 	'''
+	aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
+	parameters = aruco.DectectorParameters_create()
+	
 	corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
+	print(corners)
 	
 	#test
 	gray = aruco.drawDetectedMarkers(gray, corners)
+	
 	cv2.imshow('frame', gray)
 	if cv2.waitKey(1) & 0xFF == ord('q'):
 		break
