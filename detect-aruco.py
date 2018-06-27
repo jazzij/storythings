@@ -27,8 +27,8 @@ def printMarkers():
 CAPTURE AN IMAGE 
 '''
 def captureScene():
-    #1. Capture image
-    #scene = cam.captureImage()
+	#1. Capture image
+	#scene = cam.captureImage()
 	testfile = "arucotest.jpg"
 
 	scene = cv2.imread(testfile)
@@ -39,7 +39,7 @@ def captureScene():
 	DETECT MARKER IN IMAGE
 	'''
 	aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
-	parameters = aruco.DectectorParameters_create()
+	parameters = aruco.DetectorParameters_create()
 	
 	corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
 	print(corners)
@@ -47,10 +47,10 @@ def captureScene():
 	#test
 	gray = aruco.drawDetectedMarkers(gray, corners)
 	
-	cv2.imshow('frame', gray)
-	if cv2.waitKey(1) & 0xFF == ord('q'):
-		break
+	cv2.imwrite("arc_detect_result.jpg", gray)
 		
+##########
+
 captureScene()
 
 cv2.destroyAllWindows()
