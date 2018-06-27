@@ -1,9 +1,21 @@
+"""
+THIS CODE DEVELOPED USING ARUCO OPENCV LIB = https://docs.opencv.org/3.4/d5/dae/tutorial_aruco_detection.html
+AND WITH HELP FROM PYTHON TUTORIAL PROVIDED BY : http://www.philipzucker.com/aruco-in-opencv/
+"""
 #ARUCO DETECT
 import numpy as np
 import cv2
 import cv2.aruco as aruco
 
 IMAGE_DIR = "./arcimg/"
+SMALL_DICT = cv.aruco.DICT_4X4_50
+
+'''
+GENERATE DEFINE DICTIONARY
+THIS IS RUN ONCE during system initiation
+'''
+def printMarkers():
+
 
 '''
 CAPTURE AN IMAGE 

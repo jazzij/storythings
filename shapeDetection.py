@@ -48,7 +48,18 @@ class Shape(object):
 		x1 = (self.rect_topLeft[0] -alpha) if (self.rect_topLeft[0]-alpha > 0) else 0
 		x2 = (self.rect_bottomRight[0] +alpha) if (self.rect_bottomRight[0] + alpha < width) else self.rect_bottomRight[0]
 		
-		roi = image[y1:y2, x1:x2]
+		#USE BOUNDING RECT
+		X, Y, W, H = cv2.boundingRect(c)
+
+		#USE CIRCLE
+		#(x,y), radius = cv.minEnclosingCircle(c)
+		#center = (int(x), int(y))
+		#radius = int(radius)
+		
+
+		#roi = image[y1:y2, x1:x2]
+		roi = image[Y:Y+H, X:X+W]		
+		
 		filename  = "{0}roi{1}.jpg".format(CONTOUR_DIR, self.id)
 		cv2.imwrite(filename, roi)
 
@@ -170,7 +181,7 @@ class ShapeDetector(object):
 	def saveDetectedShape(self, shapeContour, image, id=None):
 		previous = self.findThisShape(shapeContour)
 		if previous >= 0:
-			print "found shape in ROI", previous
+			print ("found shape in ROI ", previous)
 			return previous
 
 		#create shape object to store contour and metadata
@@ -216,11 +227,11 @@ class ShapeDetector(object):
 		
 		
 	def findThisShape(self, shapeContour):
-		print "Comparing against ", len(self.detected_shapes), " saved shapes."
+		print ("Comparing against ", len(self.detected_shapes), " saved shapes.")
 		#search for this shape by name
 		for savedShape in self.detected_shapes:
 			ret = cv2.matchShapes(shapeContour, savedShape.contour, 1, 0.0)
-			print "Match score: ", ret
+			print ("Match score: ", ret)
 			if ret < .01 :
 				return savedShape.id
 						
@@ -251,7 +262,7 @@ class ShapeDetector(object):
 						
 		cv2.imwrite( img_name, dest_image )
 		#print "Wrote "  + img_name
-		print "Draw rectangle: {0}, {1}".format( (extLeft[0], extTop[1]), (extRight[0], extBottom[1]))
+		print ("Draw rectangle: {0}, {1}".format( (extLeft[0], extTop[1]), (extRight[0], extBottom[1])))
 
 	#I only need to save the contours so I can maintain the identification pool
 	# and I need to save the associations (
@@ -285,7 +296,7 @@ class ShapeDetector(object):
 			distances["y"] = v
 			distances["e"] = e
 			distances["shape"] = shape
- 			sortedShapes.append( distances )
+			sortedShapes.append(distances)
 
 		#2 get only shapes perpendicular to shape. ie RIGHT: ydist==0, xdist > 0. "right" should be whatever of these has smallest e
 		right =  [s for s in sortedShapes if s["y"] == 0 and s["x"] < 0]
@@ -293,10 +304,10 @@ class ShapeDetector(object):
 		above = [s for s in sortedShapes if s["x"] == 0 and s["y"] < 0]
 		below = [s for s in sortedShapes if s["x"] == 0 and s["y"]  > 0]
 
-		right.sort(key = lambda x: abs( x["e"] ) )
-		left.sort(key = lambda x: abs( x["e"] ) )
-		below.sort(key = lambda x: abs( x["e"] ) )
-		below.sort(key = lambda x: abs( x["e"] ) )
+		right.sort(key = lambda x: abs( x["e"]))
+		left.sort(key = lambda x: abs( x["e"]))
+		below.sort(key = lambda x: abs( x["e"]))
+		below.sort(key = lambda x: abs( x["e"]))
 
 		#3 get closest shape( first element in list) for the adjacency
 		adjacent = dict()
